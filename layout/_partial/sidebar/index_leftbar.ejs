@@ -96,6 +96,7 @@ function layoutFooterDiv() {
   if (social == null) {
     return ''
   }
+  if (page.footer_social == false) {return ''}
   var el = '<footer class="footer dis-select">';
   el += '<div class="social-wrap">';
   for (let id of Object.keys(social)) {
@@ -142,7 +143,9 @@ function layoutNavArea() {
   var el = ''
   el += `<div class="nav-area">`
   el += partial('search', {item: search})
-  el += partial('menu', {where: 'sidebar'})
+  if (page.show_menu !== false) {
+    el += partial('menu', {where: 'sidebar'})
+  }
   el += `</div>`
   return el
 }

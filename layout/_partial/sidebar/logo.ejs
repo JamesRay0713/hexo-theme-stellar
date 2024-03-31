@@ -38,6 +38,7 @@ function layoutTitle(main, url, sub) {
 }
 
 function layoutDiv() {
+  if(page.header == false) {return ''}
   if (where == 'main') {
     if (page.header == false) {
       return ''

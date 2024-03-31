@@ -113,7 +113,10 @@ function layoutDiv() {
             el += ' onclick="util.copy(&quot;copy-link&quot;, &quot;' + __('message.copied') + '&quot;)"';
           }
           el += '>';
-          el += icon(`share:${item}`)
+          //el += icon(`share:${item}`)   ### icon函数输出的是一个<img>标签，我想为其新增自定义的style, 因此改写此行.
+          el += icon(`share:${item}`).replace('>', ' ');
+          el += 'style="width: 1.5em; height: 1.5em; display: inline-block; margin-right: 10px;"';
+          el += '>';     
           el += '</a>';
         }
       });
@@ -130,14 +133,19 @@ function layoutDiv() {
         return ''
       }
     }
+    license = '本文由[Raymond~](https://taddream.site/)创作, 基于[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by/4.0/)协议, 转载请注明出处. 分享文章: ';
+    if (page.author && theme.authors[page.author]) {
+      license = license.replace('Raymond~', `${theme.authors[page.author].name}`).replace('https://taddream.site/', `${theme.authors[page.author].url}`);
+    }
     el += `
-    <section id="share">
-      <div class="header"><span>${__('meta.share')}</span></div>
-      <div class="body">
-        <div class="link"><input class="copy-area" readonly="true" id="copy-link" value="${page.permalink}" /></div>
-        <div class="social-wrap dis-select">${socialButtons()}</div>
-        ${qrcode()}
-      </div>
+    <section id="share">  
+      ${markdown(license).replace('</p>', '')}
+      <span class="link" style="display: inline;">
+        <input class="copy-area" readonly="" id="copy-link" value="${page.permalink}" style="display: none;">
+      </span>       
+      ${socialButtons()}
+      ${qrcode()}
+      </p>
     </section>
     `
   }

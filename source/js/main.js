@@ -36,8 +36,7 @@ const util = {
   copy: (id, msg) => {
     const el = document.getElementById(id);
     if (el) {
-      el.select();
-      document.execCommand("Copy");
+      navigator.clipboard.writeText(el.value);
       if (msg && msg.length > 0) {
         hud.toast(msg, 2500);
       }
